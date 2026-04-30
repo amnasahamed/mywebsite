@@ -1,0 +1,59 @@
+# llms.txt
+# https://amnasahamed.com
+# Emerging standard for AI crawlers and LLMs
+
+## Site
+- Name: AmnasOS 95
+- URL: https://amnasahamed.com
+- Description: Personal portfolio and digital workspace of Amnas Ahamed — Entrepreneur, Technology Consultant & GenAI Educator. Built as a retro Windows 95-themed interactive experience.
+- Owner: Amnas Ahamed
+- Contact: amnaskt05@gmail.com
+
+## Person
+- Name: Amnas Ahamed
+- Role: Entrepreneur, Technology Consultant, GenAI Educator
+- Location: Kerala, India
+- Education: MBA (Operations & Marketing) from Pondicherry University, B.Sc Computer Science from University of Calicut
+- LinkedIn: https://linkedin.com/in/amnasahamed
+
+## Ventures
+- CLAPS Learn — Personalized EdTech Platform
+- Pelago Consultants — Technology Consulting
+- Desgro Creatives — Creative Design Studio
+- Edapt × IIT Madras Pravartak — Applied AI Mastery Program (GenAI Educator & Product Manager)
+
+## Projects
+- ClapsBoard — AI-powered collaborative workspace
+- WeddingTracker — Real-time wedding planning platform
+- RapidSEO Audit — Automated SEO analysis tool
+- MediaWatchdog — Brand monitoring & media tracking
+- Stock Analysis Dashboard — Real-time stock visualization
+- Content Automation — AI-driven content pipeline
+
+## Case Studies
+- Badria Sweets — AI-powered WhatsApp automation for orders
+- Navakeralam — Government citizen response web portal
+
+## Expertise
+- Applied AI & Generative AI
+- No-Code Development (n8n, WordPress, Bubble)
+- Systems Architecture & Automation
+- Creative Operations
+- EdTech & AI Education
+
+## Sections
+- / (Desktop — main interactive experience)
+- About Me
+- Timeline (Career journey)
+- Projects
+- Ventures
+- Case Studies
+- Media (Photos & videos)
+- Vibe Coding (Terminal experience)
+- Contact (Form via Formspree)
+
+## Tech Stack
+- React 19, TypeScript, Vite
+- Tailwind CSS 4, Motion (Framer Motion)
+- Formspree (Contact form)
+- Deployed as static site

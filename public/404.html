@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AmnasOS 95 — Error</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #008080;
+      font-family: 'MS Sans Serif', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Fake desktop icons in background */
+    .desktop-icons {
+      position: fixed;
+      top: 16px;
+      left: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: white;
+      font-size: 11px;
+      text-shadow: 1px 1px 1px rgba(0,0,0,0.6);
+    }
+    .desktop-icon span:first-child { font-size: 32px; }
+
+    /* Taskbar */
+    .taskbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 32px;
+      background: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 4px;
+      z-index: 100;
+    }
+    .start-btn {
+      background: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      font-weight: bold;
+      padding: 2px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .start-btn:active {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #ffffff;
+      border-right: 2px solid #ffffff;
+    }
+    .clock {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #ffffff;
+      border-right: 2px solid #ffffff;
+      padding: 2px 12px;
+      font-size: 12px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    /* BSOD overlay */
+    .bsod {
+      position: fixed;
+      inset: 0;
+      background: #000080;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier New', 'Lucida Console', monospace;
+      z-index: 200;
+      padding: 40px;
+      transition: opacity 0.5s;
+    }
+    .bsod.hidden { display: none; }
+
+    .bsod-header {
+      background: #a8a8a8;
+      color: #000080;
+      padding: 2px 12px;
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .bsod p {
+      font-size: 14px;
+      line-height: 1.8;
+      text-align: center;
+      max-width: 700px;
+    }
+
+    .bsod .big-text {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .bsod .hint {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #a0a0ff;
+    }
+
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Error dialog (shown after BSOD) */
+    .error-dialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 300;
+      display: none;
+    }
+    .error-dialog.visible { display: block; }
+
+    .dialog-window {
+      background: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      min-width: 420px;
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
+    }
+    .dialog-titlebar {
+      background: #000080;
+      color: white;
+      padding: 3px 6px;
+      font-size: 13px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dialog-close {
+      background: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .dialog-body {
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .dialog-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+    .dialog-text {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .dialog-buttons {
+      display: flex;
+      justify-content: center;
+      padding: 0 20px 16px;
+      gap: 8px;
+    }
+    .dialog-btn {
+      background: #c0c0c0;
+      border-top: 2px solid #ffffff;
+      border-left: 2px solid #ffffff;
+      border-bottom: 2px solid #808080;
+      border-right: 2px solid #808080;
+      padding: 4px 24px;
+      font-size: 13px;
+      cursor: pointer;
+      outline: none;
+    }
+    .dialog-btn:active {
+      border-top: 2px solid #808080;
+      border-left: 2px solid #808080;
+      border-bottom: 2px solid #ffffff;
+      border-right: 2px solid #ffffff;
+    }
+    .dialog-btn:focus {
+      outline: 1px dotted #000;
+      outline-offset: -4px;
+    }
+
+    /* Typing cursor effect */
+    .cursor-block {
+      display: inline-block;
+      width: 8px;
+      height: 14px;
+      background: white;
+      animation: blink 0.6s step-end infinite;
+      vertical-align: bottom;
+    }
+
+    /* Fade in animation */
+    .fade-in {
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 500px) {
+      .dialog-window { min-width: 320px; }
+      .bsod p { font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fake desktop background -->
+  <div class="desktop-icons">
+    <div class="desktop-icon"><span>📁</span><span>My Computer</span></div>
+    <div class="desktop-icon"><span>🗑️</span><span>Recycle Bin</span></div>
+    <div class="desktop-icon"><span>🌐</span><span>IE Explorer</span></div>
+    <div class="desktop-icon"><span>📝</span><span>Notepad</span></div>
+  </div>
+
+  <!-- BSOD -->
+  <div class="bsod" id="bsod">
+    <div class="bsod-header">AmnasOS 95</div>
+    <p class="big-text">
+      This page has performed an illegal operation and will be shut down.
+    </p>
+    <p>
+      If the problem persists, contact the website administrator.
+    </p>
+    <br/>
+    <p>
+      Exception 0E at 0028:C0034B03 in VXD VFAT(01) +<br/>
+      00007D93. This was called from 0028:C00340C8 in VXD VFAT(01) +<br/>
+      00007358. It may be possible to continue normally.
+    </p>
+    <br/>
+    <p>
+      * The URL you're looking for doesn't exist.<br/>
+      * It may have been moved, deleted, or never existed.<br/>
+      * This is not the page you're looking for. 👋
+    </p>
+    <p class="hint">
+      Press any key to continue <span class="cursor-block"></span>
+    </p>
+  </div>
+
+  <!-- Error Dialog -->
+  <div class="error-dialog" id="errorDialog">
+    <div class="dialog-window fade-in">
+      <div class="dialog-titlebar">
+        <span>⚠️ AmnasOS 95 — Page Not Found</span>
+        <div class="dialog-close">✕</div>
+      </div>
+      <div class="dialog-body">
+        <div class="dialog-icon">⚠️</div>
+        <div class="dialog-text">
+          <strong>The page you requested could not be found.</strong>
+          <br/><br/>
+          The file <span id="badUrl" style="font-family: monospace; background: #ffffcc; padding: 1px 4px;">(unknown)</span> may have been moved, deleted, or never existed.
+          <br/><br/>
+          <span style="color: #666;">Why not try one of these instead?</span>
+        </div>
+      </div>
+      <div class="dialog-buttons">
+        <a href="/" class="dialog-btn" style="text-decoration: none; color: #000;">🖥️ Home</a>
+        <a href="javascript:void(0)" onclick="location.reload()" class="dialog-btn" style="text-decoration: none; color: #000;">🔄 Retry</a>
+        <a href="mailto:hello@amnasahamed.com" class="dialog-btn" style="text-decoration: none; color: #000;">📧 Report</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Taskbar -->
+  <div class="taskbar">
+    <div style="display:flex; align-items:center; gap:4px; height:100%;">
+      <button class="start-btn">🖥️ Start</button>
+    </div>
+    <div class="clock" id="clock"></div>
+  </div>
+
+  <script>
+    // Show the attempted URL
+    const badUrl = document.getElementById('badUrl');
+    if (badUrl) {
+      badUrl.textContent = window.location.pathname;
+    }
+
+    // Clock
+    function updateClock() {
+      const now = new Date();
+      const h = now.getHours().toString().padStart(2, '0');
+      const m = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('clock').textContent = h + ':' + m;
+    }
+    updateClock();
+    setInterval(updateClock, 30000);
+
+    // BSOD → Error dialog transition
+    const bsod = document.getElementById('bsod');
+    const errorDialog = document.getElementById('errorDialog');
+
+    function dismissBsod() {
+      bsod.style.opacity = '0';
+      setTimeout(() => {
+        bsod.classList.add('hidden');
+        errorDialog.classList.add('visible');
+      }, 500);
+      // Remove listeners
+      document.removeEventListener('keydown', dismissBsod);
+      document.removeEventListener('click', dismissBsod);
+    }
+
+    document.addEventListener('keydown', dismissBsod, { once: false });
+    document.addEventListener('click', dismissBsod, { once: false });
+
+    // Auto-dismiss BSOD after 4 seconds
+    setTimeout(dismissBsod, 4000);
+  </script>
+</body>
+</html>

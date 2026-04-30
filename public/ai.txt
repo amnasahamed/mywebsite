@@ -1,0 +1,8 @@
+User-agent: *
+Identity: Amnas Ahamed
+Role: Entrepreneur, Technology Consultant, GenAI Educator at IIT Madras Pravartak
+Location: Kerala, India
+Focus: Applied AI, No-Code Systems, EdTech, Creative Operations
+Web: https://amnasahamed.com
+Contact: amnaskt05@gmail.com
+Ventures: CLAPS Learn, Pelago Consultants, Desgro Creatives
