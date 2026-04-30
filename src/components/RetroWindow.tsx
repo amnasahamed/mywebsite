@@ -30,6 +30,7 @@ export const RetroWindow: React.FC<ExtendedRetroWindowProps> = ({
 
   const handleResize = useCallback(
     (e: React.MouseEvent, direction: string) => {
+      if (isMobile) return;
       e.preventDefault();
       e.stopPropagation();
 
@@ -64,7 +65,7 @@ export const RetroWindow: React.FC<ExtendedRetroWindowProps> = ({
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
     },
-    [size.w, size.h]
+    [size.w, size.h, isMobile]
   );
 
   const resizeHandles = [
@@ -77,6 +78,29 @@ export const RetroWindow: React.FC<ExtendedRetroWindowProps> = ({
     { dir: 'se', cls: 'bottom-0 right-0 w-3 h-3 cursor-se-resize' },
     { dir: 'sw', cls: 'bottom-0 left-0 w-3 h-3 cursor-sw-resize' },
   ];
+
+  const windowStyles = isMaximized
+    ? {
+        top: isMacos ? '28px' : 0,
+        left: 0,
+        width: '100vw',
+        height: isMacos ? 'calc(100vh - 28px)' : 'calc(100vh - 40px)',
+      }
+    : isMobile
+      ? {
+          top: isMacos ? '35px' : '5px',
+          left: '5px',
+          right: '5px',
+          bottom: isMacos ? '70px' : '45px',
+          width: 'calc(100vw - 10px)',
+          height: 'auto',
+        }
+      : {
+          top: defaultPos.y,
+          left: defaultPos.x,
+          width: size.w,
+          height: size.h,
+        };
 
   return (
     <motion.div
@@ -93,34 +117,13 @@ export const RetroWindow: React.FC<ExtendedRetroWindowProps> = ({
       style={{
         position: 'absolute',
         zIndex: zIndex || (isActive ? 50 : 10),
-        ...(isMaximized
-          ? {
-              top: isMacos ? '28px' : 0,
-              left: 0,
-              width: '100vw',
-              height: isMacos ? 'calc(100vh - 28px)' : 'calc(100vh - 40px)',
-            }
-          : isMobile
-            ? {
-                top: isMacos ? '40px' : '10px',
-                left: '10px',
-                right: '10px',
-                bottom: '80px',
-                width: 'auto',
-                height: 'auto',
-              }
-            : {
-                top: defaultPos.y,
-                left: defaultPos.x,
-                width: size.w,
-                height: size.h,
-              }),
+        ...windowStyles,
       }}
       className={`${
         theme === 'retro'
           ? 'bg-[#c0c0c0] retro-border shadow-[2px_2px_10px_rgba(0,0,0,0.5)]'
           : 'macos-glass rounded-2xl macos-window-shadow border border-white/30'
-      } flex flex-col overflow-hidden transition-shadow duration-300`}
+      } flex flex-col overflow-hidden transition-all duration-300`}
     >
       {/* Resize Handles */}
       {!isMaximized &&
@@ -170,26 +173,35 @@ export const RetroWindow: React.FC<ExtendedRetroWindowProps> = ({
 
         <div className={`flex items-center gap-2 overflow-hidden whitespace-nowrap ${isMacos ? 'flex-1 justify-center pr-14' : ''}`}>
           {icon}
-          <span className={`truncate ${isMacos ? 'font-bold text-gray-700 tracking-tight' : ''}`}>{title}</span>
+          <span className={`truncate ${isMacos ? 'font-bold text-gray-700 tracking-tight text-xs' : ''}`}>{title}</span>
         </div>
 
         {/* Controls for Retro */}
         {theme === 'retro' && (
           <div className="flex gap-[2px] ml-2 shrink-0">
             <button
-              onClick={(e) => { e.stopPropagation(); onMinimize(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onMinimize();
+              }}
               className="bg-[#c0c0c0] text-black retro-border w-4 h-4 flex items-center justify-center active:retro-border-inset"
             >
               <Minus size={10} strokeWidth={3} />
             </button>
             <button
-              onClick={(e) => { e.stopPropagation(); setIsMaximized(!isMaximized); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsMaximized(!isMaximized);
+              }}
               className="bg-[#c0c0c0] text-black retro-border w-4 h-4 flex items-center justify-center active:retro-border-inset"
             >
               <Square size={10} strokeWidth={3} />
             </button>
             <button
-              onClick={(e) => { e.stopPropagation(); onClose(); }}
+              onClick={(e) => {
+                e.stopPropagation();
+                onClose();
+              }}
               className="bg-[#c0c0c0] text-black retro-border w-4 h-4 flex items-center justify-center active:retro-border-inset"
             >
               <X size={10} strokeWidth={3} />
@@ -199,10 +211,10 @@ export const RetroWindow: React.FC<ExtendedRetroWindowProps> = ({
       </div>
       {/* Content */}
       <div className={`p-1 flex-1 overflow-hidden flex flex-col ${theme === 'retro' ? 'bg-[#c0c0c0]' : 'bg-transparent'}`}>
-        <div className={`flex-1 overflow-auto p-4 text-sm ${
+        <div className={`flex-1 overflow-auto p-3 md:p-4 text-sm ${
           theme === 'retro' 
             ? 'retro-border-inset bg-white text-black retro-scrollbar' 
-            : 'bg-white/70 backdrop-blur-xl text-gray-900 rounded-xl m-1.5 shadow-inner border border-white/20'
+            : 'bg-white/70 backdrop-blur-xl text-gray-900 rounded-xl m-1 md:m-1.5 shadow-inner border border-white/20'
         }`}>
           {children}
         </div>

@@ -374,16 +374,16 @@ export default function App() {
 
       {/* Desktop */}
       <div
-        className={`flex-1 min-h-0 relative p-6 mt-0`}
+        className={`flex-1 min-h-0 relative p-4 md:p-6 mt-0 overflow-y-auto md:overflow-hidden`}
         onClick={() => setStartMenuOpen(false)}
         onContextMenu={handleContextMenu}
         ref={desktopRef}
       >
         {/* Desktop Widgets */}
-        <DesktopWidgets theme={theme} />
+        {!isMobile && <DesktopWidgets theme={theme} />}
 
         {/* Desktop Icons */}
-        <div className={`flex flex-col gap-2 flex-wrap h-full content-start transition-all duration-500 ${isMacos ? 'gap-y-4' : 'gap-x-12 gap-y-8'}`}>
+        <div className={`grid grid-cols-4 sm:grid-cols-6 md:flex md:flex-col gap-x-2 gap-y-6 md:gap-y-4 md:flex-wrap h-auto md:h-full content-start transition-all duration-500 ${isMacos ? 'md:gap-y-4' : 'md:gap-x-12 md:gap-y-8'}`}>
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
@@ -391,7 +391,7 @@ export default function App() {
               <AppIcon 
                 theme={theme} 
                 type="white" 
-                size={36} 
+                size={isMobile ? 28 : 36} 
                 icon={
                   <div className={`w-full h-full overflow-hidden ${theme === 'retro' ? 'retro-border' : 'rounded-[10px]'}`}>
                     <img src="/media/amnas_me.png" alt="" className="w-full h-full object-cover" />
@@ -405,7 +405,7 @@ export default function App() {
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="blue" icon={<FileText />} />}
+            icon={<AppIcon theme={theme} type="blue" size={isMobile ? 28 : 32} icon={<FileText />} />}
             label={isMacos ? 'About Me' : 'About_Me.txt'}
             onClick={() => handleOpenWindow('about')}
           />
@@ -416,7 +416,7 @@ export default function App() {
               <AppIcon 
                 theme={theme} 
                 type="white" 
-                size={36} 
+                size={isMobile ? 28 : 36} 
                 icon={
                   <div className={`w-full h-full p-1 flex items-center justify-center ${theme === 'retro' ? 'retro-border' : ''}`}>
                     <img src="/media/sheetschat.png" alt="" className="w-full h-full object-contain" />
@@ -430,118 +430,112 @@ export default function App() {
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={
-              <AppIcon 
-                theme={theme} 
-                type={isMacos ? 'black' : 'white'} 
-                icon={isMacos ? <Laptop /> : <Zap className="text-yellow-500 fill-yellow-500" />} 
-              />
-            }
+            icon={<AppIcon theme={theme} type={isMacos ? 'black' : 'white'} size={isMobile ? 28 : 32} icon={isMacos ? <Laptop /> : <Zap className="text-yellow-500 fill-yellow-500" />} />}
             label={isMacos ? 'Retro UI' : 'Modern UI'}
             onClick={toggleTheme}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="blue" icon={<History />} />}
+            icon={<AppIcon theme={theme} type="blue" size={isMobile ? 28 : 32} icon={<History />} />}
             label={isMacos ? 'Timeline' : 'Timeline.exe'}
             onClick={() => handleOpenWindow('timeline')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="purple" icon={<Code />} />}
+            icon={<AppIcon theme={theme} type="purple" size={isMobile ? 28 : 32} icon={<Code />} />}
             label={isMacos ? 'Projects' : 'Projects.exe'}
             onClick={() => handleOpenWindow('projects')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="yellow" icon={<Folder className="fill-white" />} />}
+            icon={<AppIcon theme={theme} type="yellow" size={isMobile ? 28 : 32} icon={<Folder className="fill-white" />} />}
             label={isMacos ? 'Ventures' : 'Ventures'}
             onClick={() => handleOpenWindow('ventures')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="orange" icon={<Briefcase className="fill-white" />} />}
+            icon={<AppIcon theme={theme} type="orange" size={isMobile ? 28 : 32} icon={<Briefcase className="fill-white" />} />}
             label={isMacos ? 'Case Studies' : 'Documents'}
             onClick={() => handleOpenWindow('casestudies')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="pink" icon={<ImageIcon />} />}
+            icon={<AppIcon theme={theme} type="pink" size={isMobile ? 28 : 32} icon={<ImageIcon />} />}
             label={isMacos ? 'Media' : 'My Gallery'}
             onClick={() => handleOpenWindow('media')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="black" icon={<Terminal />} />}
+            icon={<AppIcon theme={theme} type="black" size={isMobile ? 28 : 32} icon={<Terminal />} />}
             label={isMacos ? 'Terminal' : 'MS-DOS Prompt'}
             onClick={() => handleOpenWindow('terminal')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="blue" icon={<Mail />} />}
+            icon={<AppIcon theme={theme} type="blue" size={isMobile ? 28 : 32} icon={<Mail />} />}
             label={isMacos ? 'Mail' : 'Outlook Express'}
             onClick={() => handleOpenWindow('contact')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="none" icon={<Trash2 size={36} className="text-gray-300" />} />}
+            icon={<AppIcon theme={theme} type="none" icon={<Trash2 size={isMobile ? 28 : 36} className="text-gray-300" />} />}
             label={isMacos ? 'Trash' : 'Recycle Bin'}
             onClick={() => handleOpenWindow('recyclebin')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="none" icon={<Gamepad2 size={36} className="text-gray-400" />} />}
+            icon={<AppIcon theme={theme} type="none" icon={<Gamepad2 size={isMobile ? 28 : 36} className="text-gray-400" />} />}
             label={isMacos ? 'Games' : 'Minesweeper'}
             onClick={() => handleOpenWindow('minesweeper')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="green" icon={<Music />} />}
+            icon={<AppIcon theme={theme} type="green" size={isMobile ? 28 : 32} icon={<Music />} />}
             label={isMacos ? 'Music' : 'Winamp'}
             onClick={() => handleOpenWindow('winamp')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="yellow" icon={<BookOpen />} />}
+            icon={<AppIcon theme={theme} type="yellow" size={isMobile ? 28 : 32} icon={<BookOpen />} />}
             label={isMacos ? 'Guestbook' : 'Guestbook.log'}
             onClick={() => handleOpenWindow('guestbook')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="blue" icon={<FileDown />} />}
+            icon={<AppIcon theme={theme} type="blue" size={isMobile ? 28 : 32} icon={<FileDown />} />}
             label={isMacos ? 'Resume.pdf' : 'My Resume'}
             onClick={() => window.open('/images/Profile.pdf', '_blank')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="none" icon={<Usb size={36} className={isMacos ? 'text-gray-400' : 'text-gray-600'} />} />}
+            icon={<AppIcon theme={theme} type="none" icon={<Usb size={isMobile ? 28 : 36} className={isMacos ? 'text-gray-400' : 'text-gray-600'} />} />}
             label={isMacos ? 'USB Drive' : '3.5 Floppy (A:)'}
             onClick={() => {}}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="yellow" icon={<Lock className="fill-white" />} />}
+            icon={<AppIcon theme={theme} type="yellow" size={isMobile ? 28 : 32} icon={<Lock className="fill-white" />} />}
             label={isMacos ? 'Secret.zip' : 'Hidden_File'}
             onClick={() => handleOpenWindow('secret')}
           />
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
-            icon={<AppIcon theme={theme} type="white" icon={<Camera className="text-blue-500" />} />}
+            icon={<AppIcon theme={theme} type="white" size={isMobile ? 28 : 32} icon={<Camera className="text-blue-500" />} />}
             label={isMacos ? 'Camera' : 'Screen Cap'}
             onClick={() => handleOpenWindow('screenshot')}
           />
@@ -586,10 +580,10 @@ export default function App() {
 
       {/* Taskbar or Dock */}
       {theme === 'retro' ? (
-        <div className="bg-[#c0c0c0] border-t-2 border-white shadow-[0_-2px_0_0_#dfdfdf] h-10 flex items-center px-1 justify-between relative z-[100] font-retro">
-          <div className="flex items-center gap-1.5 h-full py-1">
+        <div className="bg-[#c0c0c0] border-t-2 border-white shadow-[0_-2px_0_0_#dfdfdf] h-10 md:h-11 flex items-center px-1 justify-between relative z-[100] font-retro">
+          <div className="flex items-center gap-1 h-full py-1 overflow-hidden">
             <button
-              className={`bg-[#c0c0c0] retro-border active:retro-border-inset active:bg-[#e0e0e0] font-bold h-full flex items-center gap-2 px-3 text-sm focus:outline-none transition-all ${
+              className={`bg-[#c0c0c0] retro-border active:retro-border-inset active:bg-[#e0e0e0] font-bold h-full flex items-center gap-1.5 md:gap-2 px-2 md:px-3 text-xs md:text-sm focus:outline-none transition-all shrink-0 ${
                 startMenuOpen ? 'retro-border-inset bg-[#e0e0e0]' : ''
               }`}
               onClick={() => {
@@ -597,20 +591,20 @@ export default function App() {
                 play('menu');
               }}
             >
-              <span className="text-lg shrink-0">🖥️</span>
+              <span className="text-base md:text-lg shrink-0">🖥️</span>
               <span className="leading-none pt-0.5" style={{ textShadow: '1px 1px 0 #fff' }}>Start</span>
             </button>
 
-            <div className="w-[2px] h-full bg-gray-400 mx-1 border-l border-white border-r border-gray-600" />
+            <div className="w-[2px] h-full bg-gray-400 mx-1 border-l border-white border-r border-gray-600 shrink-0" />
 
             {/* Open Windows */}
-            <div className="flex gap-1.5 overflow-x-auto h-full items-center no-scrollbar">
+            <div className="flex gap-1 overflow-x-auto h-full items-center no-scrollbar pr-2">
               {windows
                 .filter((w) => w.isOpen)
                 .map((w) => (
                   <button
                     key={w.id}
-                    className={`bg-[#c0c0c0] retro-border active:retro-border-inset h-full min-w-[120px] max-w-[180px] truncate flex items-center gap-2 px-3 text-[11px] focus:outline-none transition-all ${
+                    className={`bg-[#c0c0c0] retro-border active:retro-border-inset h-full min-w-[36px] md:min-w-[120px] max-w-[150px] truncate flex items-center gap-2 px-2 md:px-3 text-[11px] focus:outline-none transition-all ${
                       activeWindowId === w.id && !w.isMinimized
                         ? 'retro-border-inset bg-[#dfdfdf] font-bold shadow-inner'
                         : 'hover:bg-[#dfdfdf]'
@@ -620,59 +614,47 @@ export default function App() {
                       play('click');
                     }}
                   >
-                    <div className="shrink-0 scale-90">{w.icon}</div>
-                    <span className="truncate">{w.title}</span>
+                    <div className="shrink-0 scale-90 md:scale-100">{w.icon}</div>
+                    <span className="truncate hidden md:block">{w.title}</span>
                   </button>
                 ))}
             </div>
           </div>
 
-          <div className="flex items-center gap-1 h-full">
-            {/* Social Quick Links */}
-            <div className="flex items-center gap-0.5 h-full px-1">
-              <a
-                href="https://www.linkedin.com/in/amnasahamed/"
-                target="_blank"
-                rel="noreferrer"
-                title="LinkedIn — /in/amnasahamed"
-                className="h-6 w-6 flex items-center justify-center hover:bg-[#e0e0e0] retro-border-thin cursor-pointer"
-                onClick={() => play('click')}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0077B5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                  <rect x="2" y="9" width="4" height="12"/>
-                  <circle cx="4" cy="4" r="2"/>
-                </svg>
-              </a>
-              <a
-                href="https://github.com/amnasahamed"
-                target="_blank"
-                rel="noreferrer"
-                title="GitHub — @amnasahamed"
-                className="h-6 w-6 flex items-center justify-center hover:bg-[#e0e0e0] retro-border-thin cursor-pointer"
-                onClick={() => play('click')}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#333" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/>
-                </svg>
-              </a>
-            </div>
+          <div className="flex items-center gap-1 h-full shrink-0">
+            {/* Social Quick Links - Hide on extra small mobile */}
+            {!isMobile && (
+              <div className="flex items-center gap-0.5 h-full px-1">
+                <a
+                  href="https://www.linkedin.com/in/amnasahamed/"
+                  target="_blank"
+                  rel="noreferrer"
+                  title="LinkedIn"
+                  className="h-6 w-6 flex items-center justify-center hover:bg-[#e0e0e0] retro-border-thin cursor-pointer"
+                  onClick={() => play('click')}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0077B5" strokeWidth="2">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>
+                  </svg>
+                </a>
+              </div>
+            )}
 
-            <div className="w-px h-4 bg-gray-400 mx-1" />
+            <div className="w-px h-4 bg-gray-400 mx-0.5 md:mx-1" />
 
             <SoundToggle
               soundEnabled={soundEnabled}
               onToggle={() => setSoundEnabled(!soundEnabled)}
             />
-            <div className="retro-border-inset px-3 h-full flex items-center text-[11px] bg-[#c0c0c0] shrink-0 font-retro tracking-tighter">
+            <div className="retro-border-inset px-2 md:px-3 h-full flex items-center text-[10px] md:text-[11px] bg-[#c0c0c0] shrink-0 font-retro tracking-tighter tabular-nums">
               {time}
             </div>
           </div>
 
           {/* Start Menu */}
           {startMenuOpen && (
-            <div className="absolute bottom-10 left-0 w-64 bg-[#c0c0c0] retro-border flex flex-col shadow-[2px_2px_10px_rgba(0,0,0,0.5)] max-h-[80vh]">
-              <div className="flex h-full font-retro">
+            <div className="absolute bottom-10 left-0 w-64 bg-[#c0c0c0] retro-border flex flex-col shadow-[2px_2px_10px_rgba(0,0,0,0.5)] max-h-[70vh] md:max-h-[80vh]">
+              <div className="flex h-full font-retro overflow-hidden">
                 <div className="w-8 bg-gradient-to-t from-[#000080] to-[#1084d0] flex items-end justify-center py-4 shrink-0">
                   <span
                     className="text-white font-bold tracking-widest text-lg"
@@ -687,35 +669,35 @@ export default function App() {
                 </div>
                 <div className="flex-1 p-1 flex flex-col overflow-y-auto bg-white/10 backdrop-blur-sm">
                   {[
-                    { id: 'about', icon: <FileText size={20} className="text-blue-600" />, label: 'About Me' },
-                    { id: 'timeline', icon: <History size={20} className="text-blue-800" />, label: 'Timeline' },
-                    { id: 'projects', icon: <Code size={20} className="text-purple-600" />, label: 'Projects' },
-                    { id: 'sheetschat', icon: <img src="/media/sheetschat.png" alt="" className="w-5 h-5" />, label: 'SheetsChat' },
-                    { id: 'ventures', icon: <Folder size={20} className="text-yellow-500 fill-yellow-500" />, label: 'Ventures' },
-                    { id: 'casestudies', icon: <Briefcase size={20} className="text-amber-700 fill-amber-700" />, label: 'Documents' },
+                    { id: 'about', icon: <FileText size={18} className="text-blue-600" />, label: 'About Me' },
+                    { id: 'timeline', icon: <History size={18} className="text-blue-800" />, label: 'Timeline' },
+                    { id: 'projects', icon: <Code size={18} className="text-purple-600" />, label: 'Projects' },
+                    { id: 'sheetschat', icon: <img src="/media/sheetschat.png" alt="" className="w-4.5 h-4.5" />, label: 'SheetsChat' },
+                    { id: 'ventures', icon: <Folder size={18} className="text-yellow-500 fill-yellow-500" />, label: 'Ventures' },
+                    { id: 'casestudies', icon: <Briefcase size={18} className="text-amber-700 fill-amber-700" />, label: 'Documents' },
                   ].map((item) => (
                     <div
                       key={item.id}
-                      className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer transition-colors duration-75"
+                      className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer transition-colors duration-75 active:bg-[#000080] active:text-white"
                       onClick={() => handleOpenWindow(item.id)}
                     >
                       <div className="shrink-0">{item.icon}</div>
-                      <span className="text-sm font-bold">{item.label}</span>
+                      <span className="text-xs font-bold">{item.label}</span>
                     </div>
                   ))}
                   <div className="border-t border-gray-400 my-1 retro-border-thin-inset" />
                   {[
-                    { id: 'contact', icon: <Mail size={20} className="text-blue-500" />, label: 'Outlook' },
-                    { id: 'guestbook', icon: <BookOpen size={20} className="text-amber-600" />, label: 'Guestbook' },
-                    { id: 'winamp', icon: <Music size={20} className="text-green-600" />, label: 'Winamp' },
+                    { id: 'contact', icon: <Mail size={18} className="text-blue-500" />, label: 'Outlook' },
+                    { id: 'guestbook', icon: <BookOpen size={18} className="text-amber-600" />, label: 'Guestbook' },
+                    { id: 'winamp', icon: <Music size={18} className="text-green-600" />, label: 'Winamp' },
                   ].map((item) => (
                     <div
                       key={item.id}
-                      className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer transition-colors duration-75"
+                      className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer transition-colors duration-75 active:bg-[#000080] active:text-white"
                       onClick={() => handleOpenWindow(item.id)}
                     >
                       <div className="shrink-0">{item.icon}</div>
-                      <span className="text-sm font-bold">{item.label}</span>
+                      <span className="text-xs font-bold">{item.label}</span>
                     </div>
                   ))}
                 </div>
