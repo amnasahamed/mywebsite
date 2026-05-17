@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0">
-  <channel>
-    <title>amnasahamed.com Community Notes</title>
-    <link>https://amnasahamed.com/blog/</link>
-    <description>Public-safe essays, guides, and lessons from useful community conversations.</description>
-  </channel>
-</rss>
+<rss version="2.0"><channel><title>amnasahamed.com Blog</title><link>https://amnasahamed.com</link><item>
+  <title>Website Questions People Keep Asking</title>
+  <link>https://amnasahamed.com/blog/website-questions-people-keep-asking/</link>
+  <description>A practical guide to simplifying website decisions with clarity, structure, and a simple checklist.</description>
+</item></channel></rss>
