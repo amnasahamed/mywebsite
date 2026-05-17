@@ -1,4 +1,4 @@
-import { FileText, History, Code, Folder, Briefcase, Image as ImageIcon, Terminal, Mail, Trash2 } from 'lucide-react';
+import { FileText, History, Code, Folder, Briefcase, Image as ImageIcon, Terminal, Mail, Trash2, Globe } from 'lucide-react';
 import type { StartMenuProps } from '../types';
 
 export const StartMenu = ({ openWindow }: StartMenuProps) => (
@@ -30,6 +30,9 @@ export const StartMenu = ({ openWindow }: StartMenuProps) => (
         </div>
         <div className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer" onClick={() => openWindow('terminal')}>
           <Terminal size={20} className="text-black" /> Vibe Coding
+        </div>
+        <div className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer" onClick={() => openWindow('blog')}>
+          <Globe size={20} className="text-sky-600" /> Community Notes
         </div>
         <div className="border-t border-gray-400 my-1 retro-border-thin-inset"></div>
         <div className="hover:bg-[#000080] hover:text-white p-2 flex items-center gap-2 cursor-pointer" onClick={() => openWindow('contact')}>

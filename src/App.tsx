@@ -52,6 +52,7 @@ import {
   SheetsChatContent,
   SecretZipContent,
   ScreenshotToolContent,
+  BlogContent,
 } from './windows';
 import { useClock } from './hooks/useClock';
 import { useWindowManager } from './hooks/useWindowManager';
@@ -148,6 +149,17 @@ const initialWindows: WindowData[] = [
     zIndex: 1,
     defaultPos: { x: 240, y: 140 },
     defaultSize: { w: 400, h: 500 },
+  },
+  {
+    id: 'blog',
+    title: 'Community_Notes.html',
+    icon: <Globe size={14} className="text-sky-600" />,
+    content: <BlogContent />,
+    isOpen: false,
+    isMinimized: false,
+    zIndex: 1,
+    defaultPos: { x: 280, y: 120 },
+    defaultSize: { w: 600, h: 560 },
   },
   {
     id: 'recyclebin',
@@ -486,6 +498,13 @@ export default function App() {
           <DesktopIcon
             theme={theme}
             dragConstraints={desktopRef}
+            icon={<AppIcon theme={theme} type="blue" size={isMobile ? 28 : 32} icon={<Globe />} />}
+            label={isMacos ? 'Blog' : 'Community Notes'}
+            onClick={() => handleOpenWindow('blog')}
+          />
+          <DesktopIcon
+            theme={theme}
+            dragConstraints={desktopRef}
             icon={<AppIcon theme={theme} type="none" icon={<Trash2 size={isMobile ? 28 : 36} className="text-gray-300" />} />}
             label={isMacos ? 'Trash' : 'Recycle Bin'}
             onClick={() => handleOpenWindow('recyclebin')}
@@ -673,6 +692,7 @@ export default function App() {
                     { id: 'timeline', icon: <History size={18} className="text-blue-800" />, label: 'Timeline' },
                     { id: 'projects', icon: <Code size={18} className="text-purple-600" />, label: 'Projects' },
                     { id: 'sheetschat', icon: <img src="/media/sheetschat.png" alt="" className="w-4.5 h-4.5" />, label: 'SheetsChat' },
+                    { id: 'blog', icon: <Globe size={18} className="text-sky-600" />, label: 'Community Notes' },
                     { id: 'ventures', icon: <Folder size={18} className="text-yellow-500 fill-yellow-500" />, label: 'Ventures' },
                     { id: 'casestudies', icon: <Briefcase size={18} className="text-amber-700 fill-amber-700" />, label: 'Documents' },
                   ].map((item) => (

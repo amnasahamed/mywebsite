@@ -13,3 +13,4 @@ export { GuestbookContent } from './GuestbookContent';
 export { SheetsChatContent } from './SheetsChatContent';
 export { SecretZipContent } from './SecretZipContent';
 export { ScreenshotToolContent } from './ScreenshotToolContent';
+export { BlogContent } from './BlogContent';
