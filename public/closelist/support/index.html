@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloseList — Support &amp; FAQ</title>
+  <meta name="description" content="Frequently asked questions and support for CloseList, the calm wedding guest list manager app.">
+  <link rel="icon" type="image/png" href="/closelist/icon.png">
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #4A1525;         /* Rich Burgundy */
+      --primary-light: #5C1D30;   /* Rich Burgundy hover */
+      --secondary: #C5A880;       /* Gold/Champagne */
+      --secondary-light: #FAF4EB; /* Soft cream-gold accent */
+      --text-dark: #2A2421;       /* Dark charcoal */
+      --text-soft: #66574D;       /* Warm gray */
+      --bg: #FAF8F5;              /* Cream base */
+      --card-bg: #FFFFFF;
+      --border-color: #EFE9DE;    /* Soft border */
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: rgba(250, 248, 245, 0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(74, 21, 37, 0.15);
+    }
+
+    .brand span {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-weight: 600;
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links .btn-download {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    /* Header */
+    .support-header {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    .support-header h1 {
+      font-size: 44px;
+      margin-bottom: 12px;
+      letter-spacing: -1px;
+    }
+
+    .support-header p {
+      font-size: 18px;
+      color: var(--text-soft);
+      max-width: 520px;
+      margin: 0 auto;
+    }
+
+    /* Contact Card */
+    .contact-card {
+      background: linear-gradient(135deg, #fff 0%, var(--secondary-light) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 48px;
+      box-shadow: 0 10px 30px rgba(74, 21, 37, 0.03);
+    }
+
+    .contact-card h3 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .contact-card p {
+      color: var(--text-soft);
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .contact-card a.email-btn {
+      display: inline-block;
+      background-color: var(--primary);
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 12px;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(74, 21, 37, 0.2);
+    }
+
+    .contact-card a.email-btn:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    /* Search Section */
+    .search-box {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 18px 24px 18px 56px;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      background-color: #fff;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--text-dark);
+      outline: none;
+      box-shadow: 0 8px 24px rgba(74, 21, 37, 0.02);
+      transition: var(--transition);
+    }
+
+    .search-box input:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 8px 30px rgba(197, 168, 128, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      color: var(--text-soft);
+      pointer-events: none;
+    }
+
+    /* FAQ Section */
+    .faq-title {
+      font-size: 26px;
+      margin-bottom: 24px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 12px;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 80px;
+    }
+
+    details {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      transition: var(--transition);
+      overflow: hidden;
+    }
+
+    details[open] {
+      border-color: var(--secondary);
+      box-shadow: 0 10px 30px rgba(74, 21, 37, 0.03);
+    }
+
+    summary {
+      padding: 20px 24px;
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--primary);
+      cursor: pointer;
+      user-select: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      list-style: none;
+      outline: none;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: '+';
+      font-family: 'Outfit', sans-serif;
+      font-size: 22px;
+      color: var(--secondary);
+      transition: transform 0.2s ease;
+      font-weight: 400;
+    }
+
+    details[open] summary::after {
+      transform: rotate(45deg);
+      color: var(--primary);
+    }
+
+    details p {
+      padding: 0 24px 24px;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    details code {
+      background: var(--secondary-light);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--primary);
+      font-family: monospace;
+      font-size: 14px;
+    }
+
+    .no-results {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-soft);
+      font-weight: 500;
+      display: none;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 64px 0;
+      background-color: var(--card-bg);
+      margin-top: auto;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-size: 15px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .footer-bottom a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 640px) {
+      .support-header h1 {
+        font-size: 34px;
+      }
+      .footer-content {
+        flex-direction: column;
+        gap: 32px;
+        text-align: center;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-content">
+      <a href="/closelist" class="brand">
+        <img src="/closelist/icon.png" alt="CloseList Logo">
+        <span>CloseList</span>
+      </a>
+      <div class="nav-links">
+        <a href="/closelist/support">Support</a>
+        <a href="/closelist/privacy">Privacy</a>
+        <a href="#" class="btn-download">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <header class="support-header">
+      <h1>CloseList Support</h1>
+      <p>Need help planning? Check our frequently asked questions or drop us a line below.</p>
+    </header>
+
+    <div class="contact-card">
+      <h3>Have an issue or feature request?</h3>
+      <p>CloseList is built by a solo developer, and every email goes straight to me. I usually reply within 1–2 days.</p>
+      <a href="mailto:amnasahmd@gmail.com" class="email-btn">Email: amnasahmd@gmail.com</a>
+    </div>
+
+    <div class="search-box">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="faq-search" placeholder="Search support topics (e.g. WhatsApp, Face ID, export)...">
+    </div>
+
+    <h2 class="faq-title">Frequently Asked Questions</h2>
+
+    <div class="faq-list" id="faq-list">
+      <details class="faq-item">
+        <summary>Where is my guest list stored?</summary>
+        <p>Entirely on your iPhone. CloseList has no servers and no account system — your contacts, notes, and invitation history are never uploaded anywhere. That also means deleting the app deletes your list, so export a copy first if you're switching phones.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How does the invite flow work?</summary>
+        <p>First sort your contacts on the Guests tab: swipe right on anyone you plan to invite, left on anyone you're not inviting. Everyone you shortlist appears in the To Invite tab, where a right swipe invites them by the suggested method — or use the phone and WhatsApp buttons on each row to pick a channel yourself.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why does the app ask "Did you send it?" after WhatsApp or a call?</summary>
+        <p>So your numbers stay truthful. Opening WhatsApp or the dialer doesn't guarantee the invite happened — maybe the call didn't connect or you changed your mind. Confirming keeps your Invited count something you can actually trust.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Can I change the WhatsApp invite message?</summary>
+        <p>Yes — go to More → Invite Message. You can use <code>{name}</code>, <code>{wedding}</code>, and <code>{date}</code> placeholders, and the preview shows exactly how the message will look.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Why don't some of my contacts appear after import?</summary>
+        <p>CloseList only imports contacts that have a phone number, and it automatically skips duplicates (same number in a different format). You can always add anyone manually with the + button.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I add a guest to a specific event like the mehndi or reception?</summary>
+        <p>Open the guest's detail page (tap the round info button on their row) and use the Events section. Create and manage your events under More → Manage Events.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I export my guest list?</summary>
+        <p>More → Export Guest List. You can export everyone or only invited guests, as a PDF or spreadsheet, and share it with family or your planner.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I lock the app?</summary>
+        <p>More → Privacy &amp; Security → turn on Face ID / Touch ID Lock. The app will require authentication every time it opens.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>How do I start over from scratch?</summary>
+        <p>More → Reset App. This permanently erases all guests, events, tags, invitation history, and settings, and returns the app to onboarding. It cannot be undone, so export first if you might need the data.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>I found a bug / I have a feature idea</summary>
+        <p>Please email <a href="mailto:amnasahmd@gmail.com">amnasahmd@gmail.com</a> with what happened (screenshots help a lot). CloseList is made by one person, and every report genuinely shapes the app.</p>
+      </details>
+      
+      <div class="no-results" id="no-results">
+        No topics found matching your search. Please reach out via email!
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/closelist" class="brand">
+            <img src="/closelist/icon.png" alt="CloseList Logo">
+            <span>CloseList</span>
+          </a>
+        </div>
+        <div class="footer-links">
+          <a href="/closelist/support">Support &amp; FAQ</a>
+          <a href="/closelist/privacy">Privacy Policy</a>
+          <a href="https://ko-fi.com/amnas" target="_blank" rel="noopener">Buy me a coffee</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2026 Amnas Ahamed. All rights reserved.</p>
+        <p>Made with ❤️ in Kerala</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // FAQ Search Filter
+    const searchInput = document.getElementById('faq-search');
+    const faqItems = document.querySelectorAll('.faq-item');
+    const noResults = document.getElementById('no-results');
+
+    searchInput.addEventListener('input', function() {
+      const query = this.value.toLowerCase().trim();
+      let matchCount = 0;
+
+      faqItems.forEach(item => {
+        const summary = item.querySelector('summary').textContent.toLowerCase();
+        const content = item.querySelector('p').textContent.toLowerCase();
+
+        if (summary.includes(query) || content.includes(query)) {
+          item.style.display = 'block';
+          matchCount++;
+          // Auto-expand detail if search query is active
+          if (query.length > 2) {
+            item.setAttribute('open', '');
+          } else {
+            item.removeAttribute('open');
+          }
+        } else {
+          item.style.display = 'none';
+          item.removeAttribute('open');
+        }
+      });
+
+      if (matchCount === 0 && query.length > 0) {
+        noResults.style.display = 'block';
+      } else {
+        noResults.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloseList — Privacy Policy</title>
+  <meta name="description" content="Privacy Policy for CloseList, the private, offline wedding guest list manager app.">
+  <link rel="icon" type="image/png" href="/closelist/icon.png">
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #4A1525;         /* Rich Burgundy */
+      --primary-light: #5C1D30;   /* Rich Burgundy hover */
+      --secondary: #C5A880;       /* Gold/Champagne */
+      --secondary-light: #FAF4EB; /* Soft cream-gold accent */
+      --text-dark: #2A2421;       /* Dark charcoal */
+      --text-soft: #66574D;       /* Warm gray */
+      --bg: #FAF8F5;              /* Cream base */
+      --card-bg: #FFFFFF;
+      --border-color: #EFE9DE;    /* Soft border */
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: rgba(250, 248, 245, 0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(74, 21, 37, 0.15);
+    }
+
+    .brand span {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-weight: 600;
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links .btn-download {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      transition: var(--transition);
+    }
+
+    /* Privacy Layout */
+    .privacy-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 48px;
+      padding: 60px 0 100px;
+    }
+
+    /* Sidebar (Table of Contents) */
+    .sidebar {
+      position: sticky;
+      top: 110px;
+      height: fit-content;
+    }
+
+    .sidebar h4 {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .toc-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .toc-list a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-size: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+      display: block;
+      border-left: 2px solid transparent;
+      padding-left: 12px;
+    }
+
+    .toc-list a:hover, .toc-list a.active {
+      color: var(--primary);
+      border-left-color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* Content Area */
+    .content-area h1 {
+      font-size: 44px;
+      margin-bottom: 8px;
+      letter-spacing: -1px;
+    }
+
+    .last-updated {
+      font-size: 14px;
+      color: var(--text-soft);
+      margin-bottom: 32px;
+    }
+
+    /* Summary Card */
+    .summary-card {
+      background-color: var(--secondary-light);
+      border: 1px dashed var(--secondary);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      margin-bottom: 40px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .summary-icon {
+      font-size: 32px;
+    }
+
+    .summary-text h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .summary-text p {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Document Sections */
+    .doc-section {
+      margin-bottom: 40px;
+      scroll-margin-top: 120px; /* Offset for sticky nav */
+    }
+
+    .doc-section h2 {
+      font-size: 24px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .doc-section p {
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+
+    .doc-section a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .doc-section a:hover {
+      text-decoration: underline;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 64px 0;
+      background-color: var(--card-bg);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-size: 15px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .footer-bottom a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .privacy-layout {
+        grid-template-columns: 1fr;
+        gap: 32px;
+        padding-top: 40px;
+      }
+      .sidebar {
+        display: none;
+      }
+      .content-area h1 {
+        font-size: 34px;
+      }
+      .footer-content {
+        flex-direction: column;
+        gap: 32px;
+        text-align: center;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-content">
+      <a href="/closelist" class="brand">
+        <img src="/closelist/icon.png" alt="CloseList Logo">
+        <span>CloseList</span>
+      </a>
+      <div class="nav-links">
+        <a href="/closelist/support">Support</a>
+        <a href="/closelist/privacy">Privacy</a>
+        <a href="#" class="btn-download">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="privacy-layout">
+      <!-- Sidebar TOC -->
+      <aside class="sidebar">
+        <h4>On this page</h4>
+        <ul class="toc-list">
+          <li><a href="#summary" class="active">Short Summary</a></li>
+          <li><a href="#data-collection">Data Collection</a></li>
+          <li><a href="#contacts">Contacts Access</a></li>
+          <li><a href="#biometrics">Face ID / Touch ID</a></li>
+          <li><a href="#messaging">WhatsApp & Calls</a></li>
+          <li><a href="#exports">PDF & Sheet Exports</a></li>
+          <li><a href="#deletion">Data Deletion</a></li>
+          <li><a href="#children">Children's Privacy</a></li>
+          <li><a href="#contact">Contact Information</a></li>
+        </ul>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="content-area">
+        <h1 id="title">Privacy Policy</h1>
+        <p class="last-updated">Last updated: July 2026</p>
+
+        <section id="summary" class="summary-card doc-section">
+          <span class="summary-icon">🛡️</span>
+          <div class="summary-text">
+            <h3>The short version:</h3>
+            <p>CloseList collects absolutely nothing. Your guest list, contacts, notes, and invitation history live only on your device. They are never uploaded, shared, or sold.</p>
+          </div>
+        </section>
+
+        <section id="data-collection" class="doc-section">
+          <h2>Data we collect</h2>
+          <p>None. CloseList operates offline. There are no servers, no accounts, no cloud database Syncing, no analytical tools, and no third-party SDKs. We cannot access your guest lists or contacts even if we wanted to.</p>
+        </section>
+
+        <section id="contacts" class="doc-section">
+          <h2>Contacts access</h2>
+          <p>CloseList requests access to your device's contacts list solely to facilitate building your guest list. The names and phone numbers you choose to import are read and stored in the app's local database on your device only.</p>
+          <p>Importing contacts is completely optional. You can use all of the app's features by manually typing guest names and phone numbers without granting contact list permissions.</p>
+        </section>
+
+        <section id="biometrics" class="doc-section">
+          <h2>Face ID / Touch ID</h2>
+          <p>If you enable the optional Face ID or Touch ID lock feature to secure your guest list, CloseList utilizes iOS native authentication APIs. CloseList never reads, accesses, or stores your biometric information. The Apple iOS operating system handles authentication internally and simply notifies CloseList whether the login succeeded.</p>
+        </section>
+
+        <section id="messaging" class="doc-section">
+          <h2>WhatsApp and phone calls</h2>
+          <p>When you trigger an invitation action (e.g., clicking send WhatsApp or Call), CloseList opens the official iOS Phone Dialer or WhatsApp app on your device with the guest's number and message text pre-populated.</p>
+          <p>You send the message yourself via your personal WhatsApp account. CloseList does not transmit messages or dial phone numbers itself, nor does it track whether the message was read or delivered outside of the on-device verification pop-up.</p>
+        </section>
+
+        <section id="exports" class="doc-section">
+          <h2>Exports</h2>
+          <p>When you export your guest list as a PDF or spreadsheet, the file is compiled locally on your device. It is shared only when and where you decide using the iOS Share Sheet (e.g., email, messaging apps, AirDrop, or local file storage).</p>
+        </section>
+
+        <section id="deletion" class="doc-section">
+          <h2>Data deletion</h2>
+          <p>Because your data lives exclusively on your phone, you have absolute control over it. You can erase all data at any time by navigating to <strong>More → Reset App</strong> inside the settings. Alternatively, simply uninstalling the CloseList app from your iPhone automatically erases the local database and all associated records.</p>
+        </section>
+
+        <section id="children" class="doc-section">
+          <h2>Children's privacy</h2>
+          <p>CloseList does not target, market to, or knowingly collect any information from children under the age of 13. Since the app gathers no network data, children's online privacy is fully preserved.</p>
+        </section>
+
+        <section id="contact" class="doc-section">
+          <h2>Contact</h2>
+          <p>If you have any questions, concerns, or feedback about this privacy policy, please contact me directly at <a href="mailto:amnasahmd@gmail.com">amnasahmd@gmail.com</a>.</p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/closelist" class="brand">
+            <img src="/closelist/icon.png" alt="CloseList Logo">
+            <span>CloseList</span>
+          </a>
+        </div>
+        <div class="footer-links">
+          <a href="/closelist/support">Support &amp; FAQ</a>
+          <a href="/closelist/privacy">Privacy Policy</a>
+          <a href="https://ko-fi.com/amnas" target="_blank" rel="noopener">Buy me a coffee</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2026 Amnas Ahamed. All rights reserved.</p>
+        <p>Made with ❤️ in Kerala</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Sidebar TOC highlighting on scroll
+    window.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          if (entry.intersectionRatio > 0) {
+            document.querySelectorAll('.toc-list a').forEach(link => {
+              link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.toc-list a[href="#${id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -70% 0px'
+      });
+
+      // Track all sections
+      document.querySelectorAll('.doc-section').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+</body>
+</html>

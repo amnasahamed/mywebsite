@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CloseList — The Calm Wedding Guest List Manager</title>
+  <meta name="description" content="CloseList helps you build your wedding guest list, decide who to invite with a swipe, and send invites via call or WhatsApp. Private, offline, and beautiful.">
+  <link rel="icon" type="image/png" href="/closelist/icon.png">
+  
+  <!-- Typography & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #4A1525;         /* Rich Burgundy */
+      --primary-light: #5C1D30;   /* Rich Burgundy hover */
+      --secondary: #C5A880;       /* Gold/Champagne */
+      --secondary-light: #FAF4EB; /* Soft cream-gold accent */
+      --accent: #2B583F;          /* Sage/Emerald */
+      --text-dark: #2A2421;       /* Dark charcoal */
+      --text-soft: #66574D;       /* Warm gray */
+      --bg: #FAF8F5;              /* Cream base */
+      --card-bg: #FFFFFF;
+      --border-color: #EFE9DE;    /* Soft gold-cream border */
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Navigation */
+    nav {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border-color);
+      background-color: rgba(250, 248, 245, 0.8);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .brand img {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(74, 21, 37, 0.15);
+    }
+
+    .brand span {
+      font-family: 'Outfit', sans-serif;
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-weight: 600;
+      font-size: 15px;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links .btn-download {
+      background-color: var(--primary);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-size: 14px;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(74, 21, 37, 0.2);
+    }
+
+    .nav-links .btn-download:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding: 80px 0 100px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(197, 168, 128, 0.1) 0%, rgba(250, 248, 245, 0) 70%);
+      top: -100px;
+      right: -100px;
+      z-index: -1;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: 56px;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -1.5px;
+    }
+
+    .hero-text h1 span {
+      background: linear-gradient(135deg, var(--primary) 30%, var(--secondary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-text .tagline {
+      font-size: 20px;
+      color: var(--text-soft);
+      margin-bottom: 32px;
+      line-height: 1.6;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .app-store-badge {
+      display: inline-flex;
+      align-items: center;
+      background: #000000;
+      color: #FFFFFF;
+      padding: 12px 24px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      transition: var(--transition);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .app-store-badge:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .app-store-badge svg {
+      width: 24px;
+      height: 24px;
+      margin-right: 12px;
+      fill: currentColor;
+    }
+
+    .badge-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .badge-sub {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.8;
+    }
+
+    .badge-main {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .hero-badge-details {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+
+    .hero-badge-details span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .divider-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background-color: var(--secondary);
+    }
+
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+      position: relative;
+    }
+
+    .hero-image-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 380px;
+      border-radius: 40px;
+      box-shadow: 0 30px 60px rgba(74, 21, 37, 0.15);
+      transition: var(--transition);
+    }
+
+    .hero-image-wrapper:hover {
+      transform: translateY(-8px) scale(1.02);
+      box-shadow: 0 40px 80px rgba(74, 21, 37, 0.22);
+    }
+
+    .hero-image-wrapper img {
+      width: 100%;
+      height: auto;
+      border-radius: 40px;
+      display: block;
+    }
+
+    /* Timeline / How it works */
+    .how-it-works {
+      padding: 100px 0;
+      background-color: var(--secondary-light);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 680px;
+      margin: 0 auto 64px;
+    }
+
+    .section-header h2 {
+      font-size: 40px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-header p {
+      font-size: 18px;
+      color: var(--text-soft);
+    }
+
+    .steps-timeline {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      position: relative;
+    }
+
+    .step-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      position: relative;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+
+    .step-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(74, 21, 37, 0.05);
+      border-color: var(--secondary);
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background-color: rgba(197, 168, 128, 0.15);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+
+    .step-card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    .step-card p {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 100px 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .feature-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 36px 30px;
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(74, 21, 37, 0.04);
+      border-color: var(--secondary);
+    }
+
+    .feature-icon {
+      font-size: 32px;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+
+    .feature-card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: var(--text-soft);
+      line-height: 1.6;
+    }
+
+    /* Privacy Highlight */
+    .privacy-focus {
+      padding: 80px 0;
+      background-color: var(--primary);
+      color: #fff;
+      border-radius: var(--radius-lg);
+      margin: 40px auto 100px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 30px 60px rgba(74, 21, 37, 0.2);
+    }
+
+    .privacy-focus h2 {
+      color: #FFFFFF;
+    }
+
+    .privacy-focus::after {
+      content: '';
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(197, 168, 128, 0.2) 0%, rgba(74, 21, 37, 0) 70%);
+      bottom: -150px;
+      left: -100px;
+    }
+
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .privacy-text h2 {
+      font-size: 40px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .privacy-text p {
+      font-size: 17px;
+      opacity: 0.9;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .privacy-bullets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .privacy-bullet {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .privacy-bullet-icon {
+      font-size: 20px;
+    }
+
+    .privacy-bullet-text h4 {
+      color: #FFF;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+
+    .privacy-bullet-text p {
+      font-size: 13px;
+      opacity: 0.75;
+      margin: 0;
+      line-height: 1.4;
+    }
+
+    .privacy-shield {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .shield-graphic {
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(197, 168, 128, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed rgba(197, 168, 128, 0.4);
+      position: relative;
+      animation: rotate-dash 40s linear infinite;
+    }
+
+    .shield-icon {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      font-size: 64px;
+      animation: float-shield 6s ease-in-out infinite;
+    }
+
+    @keyframes rotate-dash {
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes float-shield {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-color);
+      padding: 64px 0;
+      background-color: var(--card-bg);
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 32px;
+    }
+
+    .footer-links a {
+      text-decoration: none;
+      color: var(--text-soft);
+      font-size: 15px;
+      font-weight: 600;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      color: var(--primary);
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border-color);
+      padding-top: 32px;
+      font-size: 14px;
+      color: var(--text-soft);
+    }
+
+    .footer-bottom a {
+      color: var(--secondary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .footer-bottom a:hover {
+      text-decoration: underline;
+    }
+
+    /* Screenshots Section */
+    .screenshots-section {
+      padding: 100px 0;
+      background-color: var(--secondary-light);
+      border-top: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .screenshots-showcase {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 48px;
+    }
+
+    .screenshot-wrapper {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 32px 24px;
+      transition: var(--transition);
+    }
+
+    .screenshot-wrapper:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 40px rgba(74, 21, 37, 0.05);
+      border-color: var(--secondary);
+    }
+
+    .device-frame {
+      width: 100%;
+      max-width: 250px;
+      aspect-ratio: 9 / 19.5;
+      background: #111;
+      border-radius: 36px;
+      padding: 8px;
+      box-shadow: 0 20px 40px rgba(74, 21, 37, 0.12);
+      border: 3px solid #332B2B;
+      overflow: hidden;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .device-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 28px;
+      display: block;
+    }
+
+    .screenshot-wrapper h4 {
+      font-size: 18px;
+      margin-bottom: 8px;
+      color: var(--primary);
+    }
+
+    .screenshot-wrapper p {
+      font-size: 14px;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 48px;
+      }
+      .hero-cta {
+        align-items: center;
+      }
+      .cta-buttons {
+        justify-content: center;
+      }
+      .hero-text h1 {
+        font-size: 48px;
+      }
+      .steps-timeline {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .screenshots-showcase {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+      }
+      .privacy-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        text-align: center;
+      }
+      .privacy-bullets {
+        text-align: left;
+      }
+      .shield-graphic {
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .hero-text h1 {
+        font-size: 38px;
+      }
+      .steps-timeline {
+        grid-template-columns: 1fr;
+      }
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+      .screenshots-showcase {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+      .privacy-bullets {
+        grid-template-columns: 1fr;
+      }
+      .cta-buttons {
+        flex-direction: column;
+        width: 100%;
+      }
+      .app-store-badge {
+        width: 100%;
+        justify-content: center;
+      }
+      .footer-content {
+        flex-direction: column;
+        gap: 32px;
+        text-align: center;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container nav-content">
+      <a href="/closelist" class="brand">
+        <img src="/closelist/icon.png" alt="CloseList Logo">
+        <span>CloseList</span>
+      </a>
+      <div class="nav-links">
+        <a href="/closelist/support">Support</a>
+        <a href="/closelist/privacy">Privacy</a>
+        <a href="#" class="btn-download">Download</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>The calm way to plan your <span>wedding guest list</span>.</h1>
+        <p class="tagline">Built for how Indian weddings actually work. Import contacts, swipe to sort, and manage invitations via WhatsApp or calls — all private, secure, and offline on your device.</p>
+        
+        <div class="hero-cta">
+          <div class="cta-buttons">
+            <a href="#" class="app-store-badge">
+              <svg viewBox="0 0 512 512">
+                <path d="M186.1 332.1c15.9-14 35.7-25 58.9-32.8 23.2-7.8 47.9-11.8 73.9-11.8 23.4 0 45.4 3.2 66 9.5 20.6 6.3 38.6 15 54 26.2 14.7-22.6 22.6-48.5 22.6-77.4 0-32-9.7-60.3-29-84.9-19.3-24.6-45.5-37-78.6-37-33 0-61 10.3-84 31-23 20.7-36 47-39 79-5-1.7-10.4-2.5-16.1-2.5-13.8 0-25.8 4.7-36.1 14.1-10.3 9.4-15.5 21.2-15.5 35.4 0 10.7 3.3 19.8 9.9 27.2 6.6 7.4 14.9 11.7 24.8 13.2zm119-190.9c20-22.3 30.1-49.4 30.1-81.2 0-4.3-.3-8.8-.9-13.5-31.5 1.7-58.4 13.8-80.7 36.3-22.3 22.5-33.5 50.1-33.5 82.8 0 5.4.5 10.4 1.6 14.9 5.4.6 10.6.9 15.5.9 28 0 47.3-6.7 67.9-20.2zM433 346.5c-15.6-12-34.9-21.2-57.9-27.5-23-6.3-47.5-9.5-73.4-9.5-22.3 0-43.4 2.5-63.3 7.5-19.9 5-37.1 12.2-51.6 21.6-13.8-21.5-21-47.4-21-77.7 0-31 9-58.4 27-82.2 18-23.8 42.4-35.7 73.2-35.7 30.8 0 56.9 10 78.3 30 21.4 20 33.6 45.4 36.6 76.3 4.7-1.6 9.7-2.4 15-2.4 12.8 0 24 4.5 33.6 13.5 9.6 9 14.4 20.3 14.4 33.9 0 10.2-3 18.9-9.1 26-6.1 7.1-13.8 11.2-23.1 12.6v1.1z"/>
+              </svg>
+              <div class="badge-text">
+                <span class="badge-sub">Download on the</span>
+                <span class="badge-main">App Store</span>
+              </div>
+            </a>
+          </div>
+          <div class="hero-badge-details">
+            <span>🔒 Free App</span>
+            <div class="divider-dot"></div>
+            <span>No Account Needed</span>
+            <div class="divider-dot"></div>
+            <span>100% On-Device</span>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-image-wrapper">
+          <img src="/closelist/mockup.png" alt="CloseList iOS App Screen Mockup">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2>Work through your list, one swipe at a time</h2>
+        <p>No messy spreadsheets, no scattered napkins, no forgotten uncles. Just a calm, structured workflow that gets the job done.</p>
+      </div>
+
+      <div class="steps-timeline">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>Import Contacts</h3>
+          <p>Import your phone contacts into one central triage queue. You can also add guests manually if you don't grant contacts access.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>Swipe to Triage</h3>
+          <p>Sort contacts instantly with intuitive gestures: swipe right to shortlist for invitations, left to skip. Work through hundreds in minutes.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>Invite Efficiently</h3>
+          <p>Select guests from your "To-Invite" queue. Make a call directly or send pre-filled WhatsApp templates containing custom placeholders.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">4</div>
+          <h3>Honest Check-In</h3>
+          <p>CloseList checks in after every invitation action to verify if they were actually reached. Nobody gets marked "invited" by accident.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="section-header">
+        <h2>Built for how Indian weddings actually work</h2>
+        <p>From organizing individual sub-functions to remembering who got the physical wedding card, CloseList handles real-world complexity.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">✨</div>
+          <h3>Personalized Templates</h3>
+          <p>Draft invitation templates using <code>{name}</code>, <code>{wedding}</code>, and <code>{date}</code> placeholders. Fire them off rapidly via WhatsApp.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔄</div>
+          <h3>Multi-Channel History</h3>
+          <p>Track how each guest was contacted—call, WhatsApp message, or in person. Remember multiple invitations per guest (e.g. called AND sent card).</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🎭</div>
+          <h3>Manage Every Event</h3>
+          <p>Assign guests to specific events separately. Perfect for managing numbers across Mehndi, Sangeet, Haldi, Wedding, and Reception.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🏷️</div>
+          <h3>Custom Grouping & Sides</h3>
+          <p>Label your guests with side attributes (Bride's side, Groom's side, or mutual) and custom tags like family, friends, college, or work.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Offline Guest Notes</h3>
+          <p>Jot down dietary preferences, hotel booking details, transport requirements, or relationship notes directly on their profile.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📈</div>
+          <h3>Smart Dashboard</h3>
+          <p>Track invitation progress, see upcoming tasks, view RSVP counts, and watch the live countdown to the big day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Screenshots Section -->
+  <section class="screenshots-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Designed to keep you calm and focused</h2>
+        <p>Take a look inside the clean, minimalist interfaces designed to make guest management feel like a breeze.</p>
+      </div>
+      
+      <div class="screenshots-showcase">
+        <div class="screenshot-wrapper">
+          <div class="device-frame">
+            <img src="/closelist/screenshot1.png" alt="CloseList Triage Screen">
+          </div>
+          <h4>Swipe to Triage</h4>
+          <p>Triage contacts in minutes — swipe right to shortlist, left to skip.</p>
+        </div>
+        
+        <div class="screenshot-wrapper">
+          <div class="device-frame">
+            <img src="/closelist/screenshot2.png" alt="CloseList To-Invite Queue">
+          </div>
+          <h4>To-Invite Queue</h4>
+          <p>Instantly call or WhatsApp guests with your saved custom template.</p>
+        </div>
+        
+        <div class="screenshot-wrapper">
+          <div class="device-frame">
+            <img src="/closelist/screenshot3.png" alt="CloseList Dashboard">
+          </div>
+          <h4>Home Dashboard</h4>
+          <p>Track invitation progress, RSVPs, and watch the live countdown.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Privacy Section -->
+  <section class="container">
+    <div class="privacy-focus">
+      <div class="container privacy-grid">
+        <div class="privacy-text">
+          <div class="privacy-badge">🔒 OFFLINE FIRST</div>
+          <h2>Private by design</h2>
+          <p>Weddings involve highly personal details, phone numbers, and notes. CloseList keeps all of it local. Your contacts, notes, and invitation history are saved solely on your iPhone database and are never uploaded, shared, or sold.</p>
+          
+          <div class="privacy-bullets">
+            <div class="privacy-bullet">
+              <span class="privacy-bullet-icon">📵</span>
+              <div class="privacy-bullet-text">
+                <h4>No Accounts</h4>
+                <p>No passwords or usernames. Just open the app and start planning immediately.</p>
+              </div>
+            </div>
+            <div class="privacy-bullet">
+              <span class="privacy-bullet-icon">🔑</span>
+              <div class="privacy-bullet-text">
+                <h4>Secure Face ID</h4>
+                <p>Enable Face ID or Touch ID to keep your wedding guest list completely private.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="privacy-shield">
+          <div class="shield-graphic">
+            <div class="shield-icon">🛡️</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <a href="/closelist" class="brand">
+            <img src="/closelist/icon.png" alt="CloseList Logo">
+            <span>CloseList</span>
+          </a>
+        </div>
+        <div class="footer-links">
+          <a href="/closelist/support">Support &amp; FAQ</a>
+          <a href="/closelist/privacy">Privacy Policy</a>
+          <a href="https://ko-fi.com/amnas" target="_blank" rel="noopener">Buy me a coffee</a>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>© 2026 Amnas Ahamed. All rights reserved.</p>
+        <p>Made with ❤️ in Kerala</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
