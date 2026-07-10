@@ -11,6 +11,27 @@ export const ProjectsContent = ({ theme }: { theme?: Theme }) => {
       </div>
 
       <div className="grid grid-cols-1 gap-6">
+        {/* CloseList */}
+        <div className={`p-5 transition-all ${
+          isMacos 
+            ? 'macos-glass-dark/5 rounded-[20px] border border-black/5 hover:border-blue-200 hover:shadow-lg' 
+            : 'retro-border-thin bg-[#fafafa]'
+        }`}>
+          <div className="flex justify-between items-start mb-3">
+            <h3 className={`font-bold text-lg ${isMacos ? 'text-blue-600' : 'text-[#000080]'}`}>CloseList</h3>
+            <a href="/closelist" target="_blank" rel="noreferrer" className={`text-xs font-bold underline ${isMacos ? 'text-blue-500' : 'text-blue-600'}`}>Visit App ↗</a>
+          </div>
+          <p className="text-sm mb-2 font-bold opacity-80 uppercase tracking-tighter">The Calm Wedding Guest List Manager</p>
+          <p className="text-sm mb-4 leading-relaxed opacity-70">Helps you build your wedding guest list, decide who to invite with a swipe, and send invites via call or WhatsApp. Entirely private and offline, keeping your highly personal details solely on your device.</p>
+          <div className="flex flex-wrap gap-2">
+            {['📱 iOS App', '🔒 Local & Private', '💬 WhatsApp Integration'].map(tag => (
+              <span key={tag} className={`text-[10px] font-bold px-2 py-0.5 ${
+                isMacos ? 'bg-white/50 border border-black/5 rounded-md' : 'bg-white retro-border-thin'
+              }`}>{tag}</span>
+            ))}
+          </div>
+        </div>
+
         {/* ClapsBoard */}
         <div className={`p-5 transition-all ${
           isMacos 
