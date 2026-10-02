@@ -21,8 +21,8 @@ export const NotepadTabs: React.FC<{activeTab: NotepadTab; onSelectTab: (tab: No
     const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
     if (!nav || !active || nav.scrollWidth <= nav.clientWidth) return;
     const left = active.offsetLeft - nav.offsetLeft;
-    if (left < nav.scrollLeft) nav.scrollLeft = Math.max(0, left - 10);
-    else if (left + active.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = left + active.offsetWidth - nav.clientWidth + 10;
+    if (left < nav.scrollLeft + 46) nav.scrollLeft = Math.max(0, left - 46);
+    else if (left + active.offsetWidth > nav.scrollLeft + nav.clientWidth - 46) nav.scrollLeft = left + active.offsetWidth - nav.clientWidth + 46;
   }, [activeTab]);
   const move = (direction: number) => navRef.current?.scrollBy({left: direction * 190, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
   return (

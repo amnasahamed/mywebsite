@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExternalLink, Sparkles, Smartphone, Layers, CheckCircle2 } from 'lucide-react';
+import { ExternalLink, Video, UsersRound, ScanSearch, ArrowRight } from 'lucide-react';
 
 interface ProjectItem {
   id: string;
@@ -53,20 +53,33 @@ const PROJECTS: ProjectItem[] = [
   },
 ];
 
+const SUMMARIES: Record<string, string> = {
+  closelist: 'Send personal WhatsApp invitations and keep track of every guest, with your data on your device.',
+  clapsboard: 'Draw, teach, and stay on camera with an infinite whiteboard and picture-in-picture video.',
+  weddingtracker: 'Keep guest conversations, invitations, and RSVP follow-ups together in one place.',
+  rapidseo: 'Get an AI-assisted landing page audit with practical suggestions for copy and conversion.',
+};
+const VISUALS = { clapsboard: Video, weddingtracker: UsersRound, rapidseo: ScanSearch };
 export const ProjectsSection: React.FC = () => (
   <section>
     <h2 className="font-handwriting">Useful things, built from real life.</h2>
-    <p className="section-description">Every project starts with a small frustration. These are a few of the products and experiments that came out of mine.</p>
-    <img className="project-banner" src="/media/builders-still-life.webp" alt="A notebook of ideas, a green pencil and a folded paper airplane" />
+    <p className="section-description">Every project starts with a small frustration. Here are a few products and experiments that came out of mine.</p>
     <div className="projects-list">
-      {PROJECTS.map((project, i) => (
-        <article className="project-card" key={project.id}>
-          <div className="project-card-top"><span>0{i + 1} / PRODUCT NOTES</span><span>{project.badge}</span></div>
-          <h3>{project.title}</h3><h4>{project.subtitle}</h4><p>{project.desc}</p>
-          <div className="project-tags">{project.tags.map(tag => <span key={tag}>{tag.replace(/^[^a-zA-Z0-9]+/, '')}</span>)}</div>
-          {project.link ? <a className="text-action" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ExternalLink size={13}/></a> : <span className="text-action">Built for educators</span>}
-        </article>
-      ))}
+      {PROJECTS.map((project, i) => {
+        const Icon = VISUALS[project.id as keyof typeof VISUALS];
+        return (
+          <article className="project-card" key={project.id}>
+            {project.id === 'closelist' ? <div className="project-visual project-visual-photo"><img src="/closelist/screenshot1.png" alt="CloseList invitation dashboard and guest list preview" loading="lazy"/><span>APP PREVIEW</span></div> : <div className={`project-visual project-visual-${project.id}`} aria-hidden="true"><Icon size={46} strokeWidth={1.2}/><span>{project.id === 'clapsboard' ? 'Draw. Teach. Stay visible.' : project.id === 'weddingtracker' ? 'Every guest. Every conversation.' : 'A clearer view of your website.'}</span><i/><i/><i/></div>}
+            <div className="project-card-body">
+              <div className="project-card-top"><span>0{i + 1}</span><span>{project.badge}</span></div>
+              <h3>{project.title}</h3><p>{SUMMARIES[project.id]}</p>
+              <div className="project-tags">{project.tags.slice(0, 3).map(tag => <span key={tag}>{tag.replace(/^[^a-zA-Z0-9]+/, '')}</span>)}</div>
+              <details className="project-details"><summary>Project details</summary><p>{project.desc}</p></details>
+              <div className="project-card-action">{project.link ? <a className="text-action" href={project.link} target={project.link.startsWith('/') ? undefined : '_blank'} rel="noreferrer">{project.linkLabel} <ExternalLink size={16}/></a> : <a className="text-action" href="#contact">Ask about this project <ArrowRight size={16}/></a>}</div>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 );
