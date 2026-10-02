@@ -53,84 +53,20 @@ const PROJECTS: ProjectItem[] = [
   },
 ];
 
-export const ProjectsSection: React.FC = () => {
-  return (
-    <div className="space-y-8 text-[var(--text-main)]">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-color)] pb-2 text-xs font-mono opacity-70">
-        <span>Section: 02 • Products & Prototypes</span>
-        <span>"Built from real problems"</span>
-      </div>
-
-      <div className="space-y-2">
-        <h2 className="text-2xl md:text-3xl font-bold font-handwriting text-blue-900 dark:text-blue-200">
-          Featured Projects & Tools 🚀
-        </h2>
-        <p className="text-xs md:text-sm opacity-80 leading-relaxed">
-          I prefer building things that solve an immediate frustration over hypothetical software. Here are a few things I've built and shipped:
-        </p>
-      </div>
-
-      {/* Projects List on Ruled Lines */}
-      <div className="space-y-6">
-        {PROJECTS.map((project, index) => (
-          <article
-            key={project.id}
-            className="p-4 md:p-5 rounded-md border border-[var(--line-color)] bg-black/[0.015] dark:bg-white/[0.02] hover:bg-black/[0.03] transition-all relative group"
-          >
-            {/* Top row with Title and Link */}
-            <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-xs font-bold px-1.5 py-0.5 bg-black/5 dark:bg-white/10 rounded-sm">
-                  #{String(index + 1).padStart(2, '0')}
-                </span>
-                <h3 className="text-lg md:text-xl font-bold tracking-tight text-blue-950 dark:text-blue-100 font-sans">
-                  {project.title}
-                </h3>
-                {project.badge && (
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900/60 dark:text-blue-300">
-                    {project.badge}
-                  </span>
-                )}
-              </div>
-
-              {project.link && (
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline bg-blue-50 dark:bg-blue-950/40 px-2.5 py-1 rounded-sm border border-blue-200/50"
-                >
-                  <span>{project.linkLabel || 'Visit'}</span>
-                  <ExternalLink size={12} />
-                </a>
-              )}
-            </div>
-
-            {/* Subtitle / Pitch */}
-            <div className="text-xs md:text-sm font-semibold uppercase tracking-wider text-amber-800 dark:text-amber-300 font-mono mb-2">
-              {project.subtitle}
-            </div>
-
-            {/* Description */}
-            <p className="text-xs md:text-sm leading-relaxed opacity-85 mb-3 font-sans">
-              {project.desc}
-            </p>
-
-            {/* Tags */}
-            <div className="flex flex-wrap gap-1.5 pt-1">
-              {project.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="text-[10px] font-mono px-2 py-0.5 bg-black/5 dark:bg-white/5 border border-[var(--line-color)] rounded-xs opacity-80"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
+export const ProjectsSection: React.FC = () => (
+  <section>
+    <h2 className="font-handwriting">Useful things, built from real life.</h2>
+    <p className="section-description">Every project starts with a small frustration. These are a few of the products and experiments that came out of mine.</p>
+    <img className="project-banner" src="/media/builders-still-life.webp" alt="A notebook of ideas, a green pencil and a folded paper airplane" />
+    <div className="projects-list">
+      {PROJECTS.map((project, i) => (
+        <article className="project-card" key={project.id}>
+          <div className="project-card-top"><span>0{i + 1} / PRODUCT NOTES</span><span>{project.badge}</span></div>
+          <h3>{project.title}</h3><h4>{project.subtitle}</h4><p>{project.desc}</p>
+          <div className="project-tags">{project.tags.map(tag => <span key={tag}>{tag.replace(/^[^a-zA-Z0-9]+/, '')}</span>)}</div>
+          {project.link ? <a className="text-action" href={project.link} target="_blank" rel="noreferrer">{project.linkLabel} <ExternalLink size={13}/></a> : <span className="text-action">Built for educators</span>}
+        </article>
+      ))}
     </div>
-  );
-};
+  </section>
+);

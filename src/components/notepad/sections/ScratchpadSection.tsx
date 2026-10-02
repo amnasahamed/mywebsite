@@ -9,12 +9,14 @@ const DEFAULT_NOTE = `• Welcome to the real lined notepad!
 
 export const ScratchpadSection: React.FC = () => {
   const [content, setContent] = useState<string>(() => {
-    return localStorage.getItem('amnas-visitor-scratchpad') ?? DEFAULT_NOTE;
+    try { return localStorage.getItem('amnas-visitor-scratchpad') ?? DEFAULT_NOTE; } catch { return DEFAULT_NOTE; }
   });
   const [copied, setCopied] = useState(false);
+  const [feedback, setFeedback] = useState('');
+  const [previousNote, setPreviousNote] = useState<string | null>(null);
 
   useEffect(() => {
-    localStorage.setItem('amnas-visitor-scratchpad', content);
+    try { localStorage.setItem('amnas-visitor-scratchpad', content); } catch { setFeedback('Browser storage is unavailable. Download your note to keep a copy.'); }
   }, [content]);
 
   const handleCopy = async () => {
@@ -23,7 +25,7 @@ export const ScratchpadSection: React.FC = () => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // fallback
+      setFeedback('Could not copy. Select the text and copy it manually.');
     }
   };
 
@@ -35,36 +37,31 @@ export const ScratchpadSection: React.FC = () => {
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    URL.revokeObjectURL(element.href);
   };
 
   const handleClear = () => {
-    if (window.confirm('Clear all your notes on this page?')) {
-      setContent('');
-    }
+    setPreviousNote(content);
+    setContent('');
+    setFeedback('Note cleared. You can undo this.');
   };
 
   const handleReset = () => {
+    setPreviousNote(content);
     setContent(DEFAULT_NOTE);
+    setFeedback('Sample restored. You can undo this.');
   };
 
   return (
     <div className="space-y-6 text-[var(--text-main)]">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-color)] pb-2 text-xs font-mono opacity-70">
-        <span>Section: 06 • Interactive Visitor Scratchpad</span>
-        <span className="flex items-center gap-1 text-emerald-600 dark:text-emerald-400">
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-          <span>Auto-saving to browser</span>
-        </span>
-      </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
           <h2 className="text-2xl md:text-3xl font-bold font-handwriting text-blue-900 dark:text-blue-200">
-            Your Personal Scratchpad ✍️
+            A space for your thoughts.
           </h2>
           <p className="text-xs md:text-sm opacity-80">
-            A real notepad you can write on! Type notes, draft thoughts, or copy them when you're done.
+            Jot down an idea or draft something here. Your notes stay in this browser.
           </p>
         </div>
 
@@ -97,9 +94,13 @@ export const ScratchpadSection: React.FC = () => {
         </div>
       </div>
 
+      <div role="status" aria-live="polite" className="text-xs text-[var(--text-muted)]">
+        {feedback} {previousNote !== null && <button className="underline ml-2" onClick={() => { setContent(previousNote); setPreviousNote(null); setFeedback('Note restored.'); }}>Undo</button>}
+      </div>
       {/* Interactive Ruled Textarea */}
       <div className="relative rounded-sm border border-[var(--line-color)] bg-transparent">
         <textarea
+          aria-label="Your personal notes"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           placeholder="Click here and start jotting down anything on your mind..."

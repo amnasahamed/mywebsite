@@ -14,15 +14,10 @@ export const ContactSection: React.FC = () => {
 
   return (
     <div className="space-y-8 text-[var(--text-main)]">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-color)] pb-2 text-xs font-mono opacity-70">
-        <span>Section: 05 • Direct Dispatch</span>
-        <span>"Leave a note on my desk"</span>
-      </div>
 
       <div className="space-y-2">
         <h2 className="text-2xl md:text-3xl font-bold font-handwriting text-blue-900 dark:text-blue-200">
-          Leave a Note for Amnas ✉️
+          Good things start with a hello.
         </h2>
         <p className="text-xs md:text-sm opacity-80 leading-relaxed">
           Got a project idea, want to collaborate on GenAI education, or just want to say hi? Write your note below and it will reach my primary inbox.
@@ -59,19 +54,20 @@ export const ContactSection: React.FC = () => {
         </div>
 
         {state.succeeded ? (
-          <div className="py-10 text-center space-y-3">
+          <div role="status" aria-live="polite" className="py-10 text-center space-y-3">
             <div className="w-12 h-12 mx-auto rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl">
               ✓
             </div>
             <h3 className="text-xl font-bold font-handwriting text-2xl text-emerald-800 dark:text-emerald-300">
-              Note Received!
+              Note received
             </h3>
             <p className="text-xs md:text-sm opacity-80 max-w-md mx-auto leading-relaxed">
               Thanks for reaching out. Your note has been delivered to Amnas's inbox. I'll get back to you shortly!
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="contact-form space-y-5" aria-label="Send a note to Amnas">
+            <div role="status" aria-live="polite"><ValidationError errors={state.errors} className="form-error" /></div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Name field */}
               <div className="space-y-1">
@@ -79,14 +75,15 @@ export const ContactSection: React.FC = () => {
                   htmlFor="contact-name" 
                   className="block text-[11px] font-mono font-bold uppercase tracking-wider opacity-70"
                 >
-                  From (Your Name)
+                  Your name
                 </label>
                 <input
                   id="contact-name"
                   name="name"
+                  autoComplete="name"
                   type="text"
                   required
-                  placeholder="e.g. Jane Doe"
+                  placeholder="Your name"
                   disabled={state.submitting}
                   className="w-full px-3 py-2 text-sm bg-transparent border-b-2 border-[var(--line-color)] focus:border-amber-600 outline-none transition-colors font-sans"
                 />
@@ -98,14 +95,15 @@ export const ContactSection: React.FC = () => {
                   htmlFor="contact-email" 
                   className="block text-[11px] font-mono font-bold uppercase tracking-wider opacity-70"
                 >
-                  Your Email Address
+                  Email address
                 </label>
                 <input
                   id="contact-email"
                   name="email"
+                  autoComplete="email"
                   type="email"
                   required
-                  placeholder="jane@example.com"
+                  placeholder="you@example.com"
                   disabled={state.submitting}
                   className="w-full px-3 py-2 text-sm bg-transparent border-b-2 border-[var(--line-color)] focus:border-amber-600 outline-none transition-colors font-sans"
                 />
@@ -119,7 +117,7 @@ export const ContactSection: React.FC = () => {
                 htmlFor="contact-message" 
                 className="block text-[11px] font-mono font-bold uppercase tracking-wider opacity-70"
               >
-                Your Message
+                Message
               </label>
               <textarea
                 id="contact-message"
@@ -128,11 +126,12 @@ export const ContactSection: React.FC = () => {
                 rows={5}
                 placeholder="Write your note here... ask a question, pitch a project, or share feedback."
                 disabled={state.submitting}
-                className="w-full p-3 text-sm bg-black/[0.02] dark:bg-white/[0.02] border border-[var(--line-color)] focus:border-amber-600 rounded-sm outline-none resize-none leading-relaxed font-sans"
+                className="w-full p-3 text-sm bg-black/[0.02] dark:bg-white/[0.02] border border-[var(--line-color)] focus:border-amber-600 rounded-sm outline-none resize-y leading-relaxed font-sans"
               />
               <ValidationError field="message" prefix="Message" errors={state.errors} className="text-red-600 text-xs font-mono" />
             </div>
 
+            <p className="form-helper">Your name, email, and message are required. Your note goes directly to Amnas.</p>
             {/* Submit Button */}
             <div className="flex justify-end pt-2">
               <button
@@ -141,7 +140,7 @@ export const ContactSection: React.FC = () => {
                 className="flex items-center gap-2 px-5 py-2.5 bg-amber-700 hover:bg-amber-800 text-white rounded-sm font-semibold text-xs md:text-sm transition-all shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
               >
                 <Send size={14} />
-                <span>{state.submitting ? 'Sending Note...' : 'Tear & Send Note ✉️'}</span>
+                <span>{state.submitting ? 'Sending Note...' : 'Send your note'}</span>
               </button>
             </div>
           </form>

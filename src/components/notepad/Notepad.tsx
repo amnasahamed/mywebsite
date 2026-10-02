@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { NotepadTabs, type NotepadTab } from './NotepadTabs';
+import React, { useState, useEffect, useRef } from 'react';
+import { NotepadTabs, TAB_NAMES, type NotepadTab } from './NotepadTabs';
 import { NotepadBinding, type PaperTheme } from './NotepadBinding';
 import { AboutSection } from './sections/AboutSection';
 import { ProjectsSection } from './sections/ProjectsSection';
@@ -7,74 +7,32 @@ import { VenturesSection } from './sections/VenturesSection';
 import { JourneySection } from './sections/JourneySection';
 import { ContactSection } from './sections/ContactSection';
 import { ScratchpadSection } from './sections/ScratchpadSection';
-
+const readTab = (): NotepadTab => { const id = window.location.hash.slice(1); return Object.prototype.hasOwnProperty.call(TAB_NAMES, id) ? id as NotepadTab : 'about'; };
 export const Notepad: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<NotepadTab>('about');
-  const [paperTheme, setPaperTheme] = useState<PaperTheme>(() => {
-    return (localStorage.getItem('amnas-paper-theme') as PaperTheme) || 'legal';
-  });
-
-  const handleThemeChange = (newTheme: PaperTheme) => {
-    setPaperTheme(newTheme);
-    localStorage.setItem('amnas-paper-theme', newTheme);
-  };
-
-  const renderSection = () => {
-    switch (activeTab) {
-      case 'about':
-        return <AboutSection />;
-      case 'projects':
-        return <ProjectsSection />;
-      case 'ventures':
-        return <VenturesSection />;
-      case 'journey':
-        return <JourneySection />;
-      case 'contact':
-        return <ContactSection />;
-      case 'scratchpad':
-        return <ScratchpadSection />;
-      default:
-        return <AboutSection />;
-    }
-  };
-
-  const themeClass = 
-    paperTheme === 'legal' ? 'paper-theme-legal' :
-    paperTheme === 'cream' ? 'paper-theme-cream' : 'paper-theme-dark';
-
+  const [activeTab, setActiveTab] = useState<NotepadTab>(readTab);
+  const [paperTheme, setPaperTheme] = useState<PaperTheme>(() => { try { const t = localStorage.getItem('amnas-paper-theme'); return t === 'legal' || t === 'dark' ? t : 'cream'; } catch { return 'cream'; } });
+  const mainRef = useRef<HTMLElement>(null);
+  useEffect(() => { const sync = () => { if (Object.prototype.hasOwnProperty.call(TAB_NAMES, window.location.hash.slice(1))) setActiveTab(readTab()); }; window.addEventListener('hashchange', sync); return () => window.removeEventListener('hashchange', sync); }, []);
+  const selectTab = (tab: NotepadTab) => { window.location.hash = tab; setActiveTab(tab); mainRef.current?.focus({preventScroll: true}); window.scrollTo({top: 0, behavior: 'smooth'}); };
+  const changeTheme = (theme: PaperTheme) => { setPaperTheme(theme); try { localStorage.setItem('amnas-paper-theme', theme); } catch {} };
+  const sections = { about: <AboutSection onNavigate={selectTab}/>, projects: <ProjectsSection/>, ventures: <VenturesSection/>, journey: <JourneySection/>, contact: <ContactSection/>, scratchpad: <ScratchpadSection/> };
   return (
-    <div className={`min-h-screen w-full desk-surface py-6 px-3 sm:px-6 md:px-10 flex flex-col items-center justify-start ${themeClass}`}>
-      {/* Container simulating a pad lying on a desk */}
-      <div className="w-full max-w-4xl flex flex-col my-auto transition-all duration-300">
-        {/* Colorful Folder / Page Index Tabs */}
-        <NotepadTabs activeTab={activeTab} onSelectTab={setActiveTab} />
-
-        {/* The Notepad Stack */}
-        <div className="notepad-stack w-full rounded-b-md overflow-hidden bg-[var(--paper-bg)] border border-black/10 dark:border-white/10 transition-colors duration-300">
-          {/* Top Binding & Perforation */}
-          <NotepadBinding theme={paperTheme} onThemeChange={handleThemeChange} />
-
-          {/* Lined Paper Body */}
-          <main className="lined-paper relative min-h-[580px] p-6 sm:p-8 md:p-12 overflow-x-hidden">
-            {/* Red / Pink Margin Rule on the Left */}
-            <div className="margin-rule" />
-
-            {/* Content Area indented past the margin line */}
-            <div className="relative z-10 pl-6 sm:pl-10 md:pl-14 max-w-3xl">
-              {renderSection()}
-            </div>
-          </main>
+    <div className={`portfolio-shell paper-theme-${paperTheme}`}>
+      <a className="skip-link" href="#notebook-content">Skip to notebook</a>
+      <div className="site-container">
+        <NotepadBinding theme={paperTheme} onThemeChange={changeTheme}/>
+        <div className="notebook-layout">
+          <NotepadTabs activeTab={activeTab} onSelectTab={selectTab}/>
+          <div className="notebook-page">
+            <div className="page-binding"><span/><span/><span/><span/><span/><span/><span/><span/><span/><span/><span/><span/></div>
+            <main ref={mainRef} id="notebook-content" tabIndex={-1} className="notebook-content" aria-label={TAB_NAMES[activeTab]}>
+              <div className="page-meta"><span>PERSONAL NOTES / {TAB_NAMES[activeTab].toUpperCase()}</span><span>PAGE {String(Object.keys(TAB_NAMES).indexOf(activeTab) + 1).padStart(2,'0')}</span></div>
+              <div key={activeTab} className="section-enter">{sections[activeTab]}</div>
+              <div className="page-bottom"><span>Always curious. Always building.</span><span>amnas.</span></div>
+            </main>
+          </div>
         </div>
-
-        {/* Desk Footnote & Quick Meta */}
-        <footer className="mt-8 text-center text-xs text-white/50 space-y-1 font-mono select-none">
-          <div>
-            © {new Date().getFullYear()} Amnas Ahamed • Crafted with real lined notepad aesthetics
-          </div>
-          <div className="text-[10px] text-white/30">
-            Kerala, India • GenAI Educator @ IIT Madras Pravartak
-          </div>
-        </footer>
+        <footer className="site-footer"><span>© {new Date().getFullYear()} Amnas Ahamed</span><span>Made with curiosity, in Kerala. <span className="footer-star">✳</span></span><a href="mailto:amnaskt05@gmail.com">Say hello ↗</a></footer>
       </div>
     </div>
   );

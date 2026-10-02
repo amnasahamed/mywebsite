@@ -53,15 +53,10 @@ const MILESTONES: MilestoneItem[] = [
 export const JourneySection: React.FC = () => {
   return (
     <div className="space-y-8 text-[var(--text-main)]">
-      {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[var(--line-color)] pb-2 text-xs font-mono opacity-70">
-        <span>Section: 04 • Chronological Journal</span>
-        <span>"Connecting the dots"</span>
-      </div>
 
       <div className="space-y-2">
         <h2 className="text-2xl md:text-3xl font-bold font-handwriting text-blue-900 dark:text-blue-200">
-          The Journey So Far ⏳
+          A winding path, a curious mind.
         </h2>
         <p className="text-xs md:text-sm opacity-80 leading-relaxed">
           A non-linear journey from computer science to operations, business strategy, and educating the next generation of builders in GenAI.

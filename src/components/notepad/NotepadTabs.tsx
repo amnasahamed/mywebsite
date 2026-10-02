@@ -1,51 +1,46 @@
-import React from 'react';
-
+import React, { useEffect, useRef, useState } from 'react';
+import { UserRound, Layers, BriefcaseBusiness, Route, Mail, PencilLine, ArrowUpRight, ChevronLeft, ChevronRight } from 'lucide-react';
 export type NotepadTab = 'about' | 'projects' | 'ventures' | 'journey' | 'contact' | 'scratchpad';
-
-interface NotepadTabsProps {
-  activeTab: NotepadTab;
-  onSelectTab: (tab: NotepadTab) => void;
-}
-
-const TABS: { id: NotepadTab; label: string; icon: string; color: string; hoverColor: string }[] = [
-  { id: 'about', label: 'About Me', icon: '📝', color: 'bg-amber-100 text-amber-900 border-amber-300', hoverColor: 'hover:bg-amber-200' },
-  { id: 'projects', label: 'Projects', icon: '🚀', color: 'bg-blue-100 text-blue-900 border-blue-300', hoverColor: 'hover:bg-blue-200' },
-  { id: 'ventures', label: 'Ventures', icon: '💼', color: 'bg-emerald-100 text-emerald-900 border-emerald-300', hoverColor: 'hover:bg-emerald-200' },
-  { id: 'journey', label: 'Journey', icon: '⏳', color: 'bg-purple-100 text-purple-900 border-purple-300', hoverColor: 'hover:bg-purple-200' },
-  { id: 'contact', label: 'Leave a Note', icon: '✉️', color: 'bg-rose-100 text-rose-900 border-rose-300', hoverColor: 'hover:bg-rose-200' },
-  { id: 'scratchpad', label: 'Scratchpad', icon: '✍️', color: 'bg-yellow-100 text-yellow-900 border-yellow-300', hoverColor: 'hover:bg-yellow-200' },
-];
-
-export const NotepadTabs: React.FC<NotepadTabsProps> = ({ activeTab, onSelectTab }) => {
+export const TAB_NAMES: Record<NotepadTab, string> = { about: 'About me', projects: 'Selected work', ventures: 'Ventures', journey: 'My journey', contact: 'Leave a note', scratchpad: 'Scratchpad' };
+const icons = [UserRound, Layers, BriefcaseBusiness, Route, Mail, PencilLine];
+export const NotepadTabs: React.FC<{activeTab: NotepadTab; onSelectTab: (tab: NotepadTab) => void}> = ({activeTab, onSelectTab}) => {
+  const navRef = useRef<HTMLElement>(null);
+  const [edges, setEdges] = useState({left: false, right: false});
+  useEffect(() => {
+    const nav = navRef.current;
+    if (!nav) return;
+    const update = () => setEdges({left: nav.scrollLeft > 2, right: nav.scrollWidth - nav.clientWidth - nav.scrollLeft > 2});
+    const observer = new ResizeObserver(update);
+    observer.observe(nav);
+    nav.addEventListener('scroll', update, {passive:true});
+    update();
+    return () => { observer.disconnect(); nav.removeEventListener('scroll', update); };
+  }, []);
+  useEffect(() => {
+    const nav = navRef.current;
+    const active = nav?.querySelector<HTMLElement>('[aria-current="page"]');
+    if (!nav || !active || nav.scrollWidth <= nav.clientWidth) return;
+    const left = active.offsetLeft - nav.offsetLeft;
+    if (left < nav.scrollLeft) nav.scrollLeft = Math.max(0, left - 10);
+    else if (left + active.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = left + active.offsetWidth - nav.clientWidth + 10;
+  }, [activeTab]);
+  const move = (direction: number) => navRef.current?.scrollBy({left: direction * 190, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
   return (
-    <nav 
-      aria-label="Notepad Sections"
-      className="flex items-end gap-1 px-2 md:px-6 overflow-x-auto no-scrollbar pt-2 select-none"
-    >
-      {TABS.map((tab) => {
-        const isActive = activeTab === tab.id;
-        return (
-          <button
-            key={tab.id}
-            onClick={() => onSelectTab(tab.id)}
-            className={`
-              relative flex items-center gap-1.5 px-3 md:px-4 py-2 text-xs md:text-sm font-semibold 
-              rounded-t-lg transition-all duration-150 border-t border-x shrink-0
-              ${tab.color} ${tab.hoverColor}
-              ${isActive 
-                ? 'shadow-sm translate-y-0 z-10 font-bold border-b-0 pb-2.5 ring-1 ring-black/5' 
-                : 'opacity-75 hover:opacity-100 translate-y-1 hover:translate-y-0.5'
-              }
-            `}
-          >
-            <span className="text-sm">{tab.icon}</span>
-            <span>{tab.label}</span>
-            {isActive && (
-              <span className="absolute -bottom-1 left-0 right-0 h-1 bg-[var(--paper-bg)] z-20" />
-            )}
-          </button>
-        );
-      })}
-    </nav>
+    <aside className="notebook-index">
+      <div className="index-heading">IN THIS NOTEBOOK <span>06</span></div>
+      <div className={`index-scroll ${edges.left ? 'has-left' : ''} ${edges.right ? 'has-right' : ''}`}>
+        <nav ref={navRef} aria-label="Notebook sections">
+          {(Object.keys(TAB_NAMES) as NotepadTab[]).map((id, i) => { const Icon = icons[i]; return (
+            <button key={id} className={`index-link ${activeTab === id ? 'is-active' : ''}`} aria-current={activeTab === id ? 'page' : undefined} onClick={() => onSelectTab(id)}>
+              <Icon size={18}/><span>{TAB_NAMES[id]}</span><small>{String(i + 1).padStart(2, '0')}</small>
+            </button>
+          ); })}
+        </nav>
+        {edges.left && <button className="nav-edge nav-edge-left" aria-label="Show previous sections" onClick={() => move(-1)}><ChevronLeft size={17}/></button>}
+        {edges.right && <button className="nav-edge nav-edge-right" aria-label="Show more sections" onClick={() => move(1)}><ChevronRight size={17}/></button>}
+      </div>
+      <div className="index-note"><span className="hand-note">A little corner<br/>of the internet.</span><p>Things I build, lessons I learn,<br/>and ideas worth keeping.</p></div>
+      <a className="index-social" href="https://www.linkedin.com/in/amnasahamed/" target="_blank" rel="noreferrer">Find me on LinkedIn <ArrowUpRight size={15}/></a>
+    </aside>
   );
 };
